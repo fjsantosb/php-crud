@@ -29,6 +29,13 @@
 						</tr>';
 				}
 			?>
+			<tr>
+				<td><input type="text" id="name"></td>
+				<td><input type="text" id="year"></td>
+				<td><input type="text" id="publisher"></td>
+				<td><input type="text" id="platform"></td>
+				<td><button type="button" onclick="add(document.getElementById('name').value, document.getElementById('year').value, document.getElementById('publisher').value, document.getElementById('platform').value)">Add</button>
+			</tr>
 		</table>
 	</div>
 </body>
