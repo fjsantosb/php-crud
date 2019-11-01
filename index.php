@@ -3,12 +3,12 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>php-crud</title>
+	<script src='index.js'></script>
 </head>
 <body>
 	<div>
 		<table>
 			<tr>
-				<th>Id</th>
 				<th>Name</th>
 				<th>Year</th>
 				<th>Publisher</th>
@@ -21,13 +21,12 @@
 				$rows = $mongo->executeQuery('php_dev.games', $query);
 				foreach ($rows as $row) {
 					echo '<tr>
-							<td>'.$row->_id.'</td>
 							<td>'.$row->name.'</td>
 							<td>'.$row->year.'</td>
 							<td>'.$row->publisher.'</td>
-							<td>'.$row->platform."</td>
-							<td><button type='button'>Edit</button>
-						</tr>";
+							<td>'.$row->platform.'</td>
+							<td><button type="button" onclick="edit(\''.$row->_id.'\')">Edit</button>
+						</tr>';
 				}
 			?>
 		</table>
