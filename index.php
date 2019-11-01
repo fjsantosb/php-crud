@@ -25,7 +25,7 @@
 							<td>'.$row->year.'</td>
 							<td>'.$row->publisher.'</td>
 							<td>'.$row->platform.'</td>
-							<td><button type="button" onclick="edit(\''.$row->_id.'\')">Edit</button>
+							<td><button type="button" onclick="remove(\''.$row->_id.'\')">Remove</button>
 						</tr>';
 				}
 			?>
