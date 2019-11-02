@@ -1,4 +1,4 @@
-function read() {
+function read(edit) {
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
@@ -14,12 +14,21 @@ function read() {
 			row.insertCell().innerHTML = 'Platform';
 			row.insertCell().innerHTML = 'Action';
 			for(i = 0; i < response.length; i++) {
-				row = tbody.insertRow();
-				row.insertCell().innerHTML = response[i].name;
-				row.insertCell().innerHTML = response[i].year;
-				row.insertCell().innerHTML = response[i].publisher;
-				row.insertCell().innerHTML = response[i].platform;
-				row.insertCell().innerHTML = '<button type="button" onclick="edit(\''+response[i]._id.$oid+'\')">Edit</button> | <button type="button" onclick="remove(\''+response[i]._id.$oid+'\')">Remove</button>';
+				if (edit == response[i]._id.$oid) {
+					row = tbody.insertRow();
+					row.insertCell().innerHTML = '<input type="text" id="update_name" value=\''+response[i].name+'\'>';
+					row.insertCell().innerHTML = '<input type="text" id="update_year" value=\''+response[i].year+'\'>';
+					row.insertCell().innerHTML = '<input type="text" id="update_publisher" value=\''+response[i].publisher+'\'>';
+					row.insertCell().innerHTML = '<input type="text" id="update_platform" value=\''+response[i].platform+'\'>';
+					row.insertCell().innerHTML = '<button type="button" onclick="update(\''+response[i]._id.$oid+'\')">Update</button> | <button type="button" onclick="remove(\''+response[i]._id.$oid+'\')">Remove</button>';
+				} else {
+					row = tbody.insertRow();
+					row.insertCell().innerHTML = response[i].name;
+					row.insertCell().innerHTML = response[i].year;
+					row.insertCell().innerHTML = response[i].publisher;
+					row.insertCell().innerHTML = response[i].platform;
+					row.insertCell().innerHTML = '<button type="button" onclick="edit(\''+response[i]._id.$oid+'\')">Edit</button>';
+				}
 			}
 			row = tbody.insertRow();
 			row.insertCell().innerHTML = '<input type="text" id="name">';
@@ -32,9 +41,31 @@ function read() {
 	request.open('POST', 'read.php', true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	request.send();
+};
+
+function update(id) {
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function () {
+		if (request.readyState == 4 && request.status == 200) {
+			var response = request.responseText;
+			if(response == 0) {
+				console.log('Update KO');
+			} else {
+				console.log('Update OK');
+			}
+			read(0);
+		}
+	}
+	request.open('POST', 'update.php', true);
+	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	request.send('id=' + id + '&name=' + document.getElementById('update_name').value + '&year=' + document.getElementById('update_year').value + '&publisher=' + document.getElementById('update_publisher').value + '&platform=' + document.getElementById('update_platform').value);
 }
 
-async function remove(id) {
+function edit(id) {
+	read(id);
+};
+
+function remove(id) {
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function () {
 		if (request.readyState == 4 && request.status == 200) {
@@ -43,8 +74,8 @@ async function remove(id) {
 				console.log('Remove KO');
 			} else {
 				console.log('Remove OK');
-				read();
 			}
+			read(0);
 		}
 	}
 	request.open('POST', 'remove.php', true);
@@ -61,8 +92,8 @@ function add(name, year, publisher, platform) {
 				console.log('Add KO');
 			} else {
 				console.log('Add OK');
-				read();
 			}
+			read(0);
 		}
 	}
 	request.open('POST', 'add.php', true);
