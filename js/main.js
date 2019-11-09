@@ -38,7 +38,7 @@ function read(edit) {
 			row.insertCell().innerHTML = '<button type="button" onclick="add(document.getElementById(\'name\').value, document.getElementById(\'year\').value, document.getElementById(\'publisher\').value, document.getElementById(\'platform\').value)">Add</button>';
 		}
 	}
-	request.open('POST', 'read.php', true);
+	request.open('POST', 'php/read.php', true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	request.send();
 };
@@ -56,7 +56,7 @@ function update(id) {
 			read(0);
 		}
 	}
-	request.open('POST', 'update.php', true);
+	request.open('POST', 'php/update.php', true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	request.send('id=' + id + '&name=' + document.getElementById('update_name').value + '&year=' + document.getElementById('update_year').value + '&publisher=' + document.getElementById('update_publisher').value + '&platform=' + document.getElementById('update_platform').value);
 }
@@ -78,7 +78,7 @@ function remove(id) {
 			read(0);
 		}
 	}
-	request.open('POST', 'remove.php', true);
+	request.open('POST', 'php/remove.php', true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	request.send('id=' + id);
 };
@@ -96,7 +96,7 @@ function add(name, year, publisher, platform) {
 			read(0);
 		}
 	}
-	request.open('POST', 'add.php', true);
+	request.open('POST', 'php/add.php', true);
 	request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	request.send('name=' + name + '&year=' + year + '&publisher=' + publisher + '&platform=' + platform);
 }
